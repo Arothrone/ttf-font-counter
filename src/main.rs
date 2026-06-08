@@ -11,9 +11,11 @@ fn main() {
     let em = face.units_per_em() as f32; // get default Units per EM
 
     let mut widths = Vec::new();
+
+    let text = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789.,!?;:'\"()«»„“ "; // English characters.
     
-    for id in 0..face.number_of_glyphs() {
-        let glyph_id = GlyphId(id);
+    for character in text.chars() {
+        let glyph_id = face.glyph_index(character).unwrap_or(GlyphId(0));
 
 
         if let Some(bbox) = face.glyph_bounding_box(glyph_id) { // https://docs.rs/ttf-parser/latest/ttf_parser/struct.Face.html explains everything on its own. Constant width per charater.
